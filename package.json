@@ -1,0 +1,19 @@
+{
+  "name": "mapwhizz",
+  "version": "1.0.0",
+  "description": "\"# mapwhizz\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "map",
+    "map",
+    "geomap",
+    "geo",
+    "geo map",
+    ""
+  ],
+  "author": "samer-goda",
+  "license": "ISC"
+}
