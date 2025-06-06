@@ -1,3 +1,5 @@
+import React from "react";
+
 let mapData = `
 <svg
    xmlns:mapsvg="http://mapsvg.com"
@@ -1035,7 +1037,8 @@ let mapData = `
      id="ZW" />
 </svg>
 `;
-class MapWhizz {
+
+class MapWhizz extends React.Component {
   constructor(containerId, data) {
     this.containerId = containerId;
     this.data = data;
@@ -1043,7 +1046,7 @@ class MapWhizz {
 
     this.container = document.getElementById(containerId);
     if (!this.container) {
-      console.error('Container not found');
+      console.error("Container not found");
       return;
     }
 
@@ -1053,7 +1056,7 @@ class MapWhizz {
   init() {
     try {
       const parser = new DOMParser();
-      const svgDoc = parser.parseFromString(this.mapData, 'image/svg+xml');
+      const svgDoc = parser.parseFromString(this.mapData, "image/svg+xml");
       this.svgElement = svgDoc.documentElement;
 
       this.container.appendChild(this.svgElement);
@@ -1062,7 +1065,7 @@ class MapWhizz {
       this.addStyles();
       this.applyColorsAndInteractions();
     } catch (error) {
-      console.error('Error loading SVG:', error);
+      console.error("Error loading SVG:", error);
     }
   }
 
@@ -1079,7 +1082,7 @@ class MapWhizz {
   getColorForValue(value) {
     const percentage = (value - this.minValue) / (this.maxValue - this.minValue);
     const startColor = [240, 249, 255]; // Light blue
-    const endColor = [24, 72, 176];     // Dark blue
+    const endColor = [24, 72, 176]; // Dark blue
 
     const r = Math.round(startColor[0] + percentage * (endColor[0] - startColor[0]));
     const g = Math.round(startColor[1] + percentage * (endColor[1] - startColor[1]));
@@ -1089,7 +1092,7 @@ class MapWhizz {
   }
 
   addStyles() {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       #${this.containerId} path {
         transition: all 0.3s ease;
@@ -1107,10 +1110,10 @@ class MapWhizz {
   }
 
   applyColorsAndInteractions() {
-    const countryDataMap = new Map(this.data.map(item => [item.country, item]));
+    const countryDataMap = new Map(this.data.map((item) => [item.country, item]));
 
-    this.svgElement.querySelectorAll('path').forEach(path => {
-      const country = path.getAttribute('title');
+    this.svgElement.querySelectorAll("path").forEach((path) => {
+      const country = path.getAttribute("title");
       const countryData = countryDataMap.get(country);
 
       if (countryData) {
@@ -1123,7 +1126,7 @@ class MapWhizz {
   }
 
   addHoverInteraction(path, country, countryData) {
-    path.addEventListener('mouseover', (event) => {
+    path.addEventListener("mouseover", (event) => {
       const tooltip = this.createTooltip(`${country}: ${countryData.value}`);
       document.body.appendChild(tooltip);
 
@@ -1132,27 +1135,27 @@ class MapWhizz {
         tooltip.style.top = `${e.pageY + 10}px`;
       };
 
-      document.addEventListener('mousemove', moveTooltip);
+      document.addEventListener("mousemove", moveTooltip);
 
       const mouseoutHandler = () => {
         document.body.removeChild(tooltip);
-        document.removeEventListener('mousemove', moveTooltip);
-        path.removeEventListener('mouseout', mouseoutHandler);
+        document.removeEventListener("mousemove", moveTooltip);
+        path.removeEventListener("mouseout", mouseoutHandler);
       };
-      path.addEventListener('mouseout', mouseoutHandler);
+      path.addEventListener("mouseout", mouseoutHandler);
     });
   }
 
   createTooltip(text) {
-    const tooltip = document.createElement('div');
-    tooltip.style.position = 'absolute';
-    tooltip.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    tooltip.style.color = '#fff';
-    tooltip.style.padding = '5px 10px';
-    tooltip.style.borderRadius = '4px';
-    tooltip.style.pointerEvents = 'none';
-    tooltip.style.fontSize = '12px';
-    tooltip.style.zIndex = '1000';
+    const tooltip = document.createElement("div");
+    tooltip.style.position = "absolute";
+    tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+    tooltip.style.color = "#fff";
+    tooltip.style.padding = "5px 10px";
+    tooltip.style.borderRadius = "4px";
+    tooltip.style.pointerEvents = "none";
+    tooltip.style.fontSize = "12px";
+    tooltip.style.zIndex = "1000";
     tooltip.textContent = text;
 
     return tooltip;
@@ -1160,4 +1163,3 @@ class MapWhizz {
 }
 
 export default MapWhizz;
-
