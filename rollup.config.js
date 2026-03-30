@@ -16,13 +16,13 @@ export default {
       format: "esm",
     },
   ],
-  external: ["react", "react-dom"],
+  external: ["react", "react-dom", "react/jsx-runtime"],
   plugins: [
     babel({
       babelHelpers: "bundled",
       presets: [
         ["@babel/preset-env", { targets: "> 0.25%, not dead" }],
-        ["@babel/preset-react", { runtime: "classic" }],
+        ["@babel/preset-react", { runtime: "automatic" }],
       ],
       extensions: [".js", ".jsx"],
       exclude: "node_modules/**",
